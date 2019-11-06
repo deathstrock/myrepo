@@ -1,7 +1,7 @@
 pipeline {
 
   environment {
-    registry = "192.168.1.81:5000/justme/myweb"
+    registry = "192.168.1.168:5000/justme/myweb"
     dockerImage = ""
   }
 
@@ -11,8 +11,7 @@ pipeline {
 
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/justmeandopensource/playjenkins.git'
-      }
+        git 'https://github.com/deathstrock/myrepo.git'      }
     }
 
     stage('Build image') {
