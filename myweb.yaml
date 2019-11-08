@@ -16,7 +16,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: "104.197.145.192:5000/hemant/myrepo"
+      - image: "deathstrock47/newrepo:1"
         imagePullPolicy: Always
         name: myweb
 
