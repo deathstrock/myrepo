@@ -1,7 +1,7 @@
 pipeline {
 
   environment {
-    registry = "deathstrock47/jnlp-docker"
+    registry = "104.197.145.192:5000/hemant/myrepo"
     registryCredential = "dockerhub"
     dockerImage = ""
   }
