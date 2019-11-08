@@ -16,7 +16,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: deathstrock47/jnlp-docker
+      - image: "104.197.145.192:5000/hemant/myrepo"
         imagePullPolicy: Always
         name: myweb
 
