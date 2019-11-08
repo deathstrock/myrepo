@@ -2,6 +2,7 @@ pipeline {
 
   environment {
     registry = "deathstrock47/jnlp-docker"
+    registryCredential = "docker1"
     dockerImage = ""
   }
 
