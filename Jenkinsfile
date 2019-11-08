@@ -1,7 +1,7 @@
 pipeline {
 
   environment {
-    registry = "172.17.0.2:5000/justme/myweb"
+    registry = "deathstrock47/jnlp-docker"
     dockerImage = ""
   }
 
