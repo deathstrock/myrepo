@@ -1,35 +1,29 @@
 pipeline {
-
-  environment {
-    registry = "deathstrock47/newrepo"
-    registryCredential = "dockerhub"
-    dockerImage = ""
-  }
-
   agent any
-
   stages {
-
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/deathstrock/myrepo.git'      }
+        git 'https://github.com/deathstrock/myrepo.git'
+      }
     }
 
     stage('Build image') {
-      steps{
+      steps {
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
+
       }
     }
 
     stage('Push Image') {
-      steps{
+      steps {
         script {
-            docker.withRegistry( '', registryCredential ) {
+          docker.withRegistry( '', registryCredential ) {
             dockerImage.push()
           }
         }
+
       }
     }
 
@@ -38,9 +32,14 @@ pipeline {
         script {
           kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
         }
+
       }
     }
 
   }
-
+  environment {
+    registry = 'deathstrock47/newrepo'
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
 }
