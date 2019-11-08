@@ -30,8 +30,7 @@ pipeline {
     stage('Deploy App') {
       steps {
         script {
-          withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: '35.223.235.17']) 
-              sh 'kubectl apply -f myweb.yaml'
+        
 
           kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
         }
