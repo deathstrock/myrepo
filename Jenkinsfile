@@ -4,7 +4,13 @@ pipeline {
     stage('Checkout Source') {
       steps {
         git 'https://github.com/deathstrock/myrepo.git'
+      def doesJavaRock = input(message: 'Do you like Java?', ok: 'Yes', 
+                        parameters: [booleanParam(defaultValue: true, 
+                        description: 'If you like Java, just push the button',name: 'Yes?')])
+
+      echo "Java rocks?:" + doesJavaRock
       }
+      
     }
 
     stage('Build image') {
