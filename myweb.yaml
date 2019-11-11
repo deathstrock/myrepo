@@ -16,7 +16,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: "deathstrock47/newrepo:$BUILD_NUMBER"
+      - image: "deathstrock47/newrepo:45"
         imagePullPolicy: Always
         name: myweb
 
