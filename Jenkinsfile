@@ -32,7 +32,7 @@ pipeline {
         script {
         
 
-          kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+          kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig --insecure-tls-skip-true=true")
         }
 
       }
