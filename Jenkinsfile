@@ -31,8 +31,9 @@ pipeline {
       steps {
         script {
         
-
-          kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig --insecure-tls-skip-true=true")
+          withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: 'https://kubernetes.default']) 
+          sh 'kubectl apply -f myweb.yaml'
+          //kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig --insecure-tls-skip-true=true")
         }
 
       }
