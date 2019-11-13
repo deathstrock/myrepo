@@ -28,11 +28,13 @@ pipeline {
 
     stage('Push Image') {
       steps{
-        script {
-            docker.withRegistry( '', registryCredential ) {
+      
+          withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+            sh 'sudo docker push -t $registry:latest'
+            //docker.withRegistry( '', registryCredential ) {
             //sh """sudo docker push ${registry}:latest"""
-            dockerImage.push()
-          }
+            //dockerImage.push()
+          
         }
       }
     }
