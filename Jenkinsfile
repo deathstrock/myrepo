@@ -29,9 +29,9 @@ pipeline {
     stage('Push Image') {
       steps{
         script {
-          docker.withRegistry( '', registryCredential ) {
-            sh """sudo docker push ${registry}:latest"""
-            //dockerImage.push()
+            docker.withRegistry( '', registryCredential ) {
+            //sh """sudo docker push ${registry}:latest"""
+            dockerImage.push()
           }
         }
       }
