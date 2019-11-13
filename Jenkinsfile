@@ -60,7 +60,7 @@ pipeline {
                 }
             }
       steps{
-        sh ''' kubectl patch deployment myweb -p   '{"spec":{"template":{"spec":{"image":$registry:$VERSION}}}}' '''
+        sh ''' patch.sh $VERSION '''
       }
     }
   //  stage('Staging Deployment'){
