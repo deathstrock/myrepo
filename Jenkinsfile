@@ -52,8 +52,9 @@ pipeline {
     }
     stage('Staging Deployment'){
       steps{
-          withCredentials([kubeconfigContent(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
-          sh '''echo "$KUBECONFIG_CONTENT"'''
+          //withCredentials([kubeconfigContent(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
+          withCredentials([kubeconfigContent(credentialsId: 'mykubeconfig')]) {
+          sh '''kubectl apply -f myweb.yaml'''
         }
       }
     }
