@@ -45,9 +45,14 @@ pipeline {
     //    }
     //  }
     //}
+
     stage('Deployment Confirmation'){
       steps{
         input("Deploy changes to production?")
+        parameters {
+            string(name: 'VERSION', defaultValue: '', description: 'Enter image version for production')
+        }
+        tagImage(name: $registry:$BUILD_NUMBER)
       }
     }
     stage('Staging Deployment'){
