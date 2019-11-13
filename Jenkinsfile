@@ -2,8 +2,8 @@ pipeline {
 
   environment {
     registry = "deathstrock47/newrepo"
-    registryCredential = 'dockerhub'
     dockerImage = ""
+    registryCredential = "dockerhub"
   }
 
   agent any
@@ -18,23 +18,18 @@ pipeline {
 
     stage('Build image') {
       steps{
-        sh """sudo chown root:jenkins /var/run/docker.sock"""
-        sh """sudo docker build -t deathstrock47/newrepo:latest ."""
-       // script {
-       //   dockerImage = docker.build registry + ":latest"
-       // }
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
       }
     }
 
     stage('Push Image') {
       steps{
-      
-          withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-            sh 'sudo docker push $registry:latest'
-            //docker.withRegistry( '', registryCredential ) {
-            //sh """sudo docker push ${registry}:latest"""
-            //dockerImage.push()
-          
+        script {
+          docker.withRegistry( "" , registryCredential ) {
+            dockerImage.push()
+          }
         }
       }
     }
