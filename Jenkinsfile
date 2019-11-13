@@ -18,6 +18,7 @@ pipeline {
 
     stage('Build image') {
       steps{
+        sh """sudo chown root:jenkins /var/run/docker.sock"""
         sh """sudo docker build -t $registry:latest"""
        // script {
        //   dockerImage = docker.build registry + ":latest"
