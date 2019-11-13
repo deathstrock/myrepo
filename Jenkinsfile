@@ -9,50 +9,54 @@ pipeline {
   agent any
 
   stages {
-    //stage ('confirmation') {
-    //  steps{
-    //  input('do you wish to contineu')
-    //  }
-    //}
+  //  stage ('confirmation') {
+  //    steps{
+  //    input('do you wish to continue')
+  //    }
+  //  }
     stage('Checkout Source') {
       steps {
         git 'https://github.com/deathstrock/myrepo.git'
       }
     }
-
-    //stage('Build image') {
-    //  steps{
-    //    script {
-    //      dockerImage = docker.build registry + ":$BUILD_NUMBER"
-    //    }
-    //  }
-    //}
-
-    //stage('Push Image') {
-    //  steps{
-    //    script {
-    //      docker.withRegistry( "" , registryCredential ) {
-    //        dockerImage.push()
-    //      }
-    //    }
-    //  }
-    //}
-
-    //stage('Deploy App') {
-    //  steps {
-    //    script {
-    //      kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
-    //    }
-    //  }
-    //}
-
+//
+  //  stage('Build image') {
+  //    steps{
+  //      script {
+  //        dockerImage = docker.build registry + ":$BUILD_NUMBER"
+  //      }
+  //    }
+  //  }
+//
+  //  stage('Push Image') {
+  //    steps{
+  //      script {
+  //        docker.withRegistry( "" , registryCredential ) {
+  //          dockerImage.push()
+  //        }
+  //      }
+  //    }
+  //  }
+//
+  //  stage('Stagging') {
+  //      steps {
+  //        script {
+  //          kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+  //        }
+  //      }
+  //    }
+  //  //tag stagging
+  //  //stage('Changing tag to staging'){
+  //  //  steps{
+  //  //      
+  //  //  }
+  //  //}
     stage('Deployment Confirmation'){
       steps{
         input("Deploy changes to production?")
         parameters {
             string(name: 'VERSION', defaultValue: '', description: 'Enter image version for production')
         }
-        tagImage(name: $registry:$BUILD_NUMBER)
       }
     }
     stage('Staging Deployment'){
