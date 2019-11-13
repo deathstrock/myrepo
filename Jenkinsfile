@@ -60,7 +60,7 @@ pipeline {
                 }
             }
       steps{
-        sh ''' patch.sh $VERSION '''
+        sh ''' ./patch.sh $VERSION   '''
       }
     }
   //  stage('Staging Deployment'){
