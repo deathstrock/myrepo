@@ -51,9 +51,10 @@ pipeline {
       }
     }
     stage('Staging Deployment'){
-
-        withCredentials([kubeconfigContent(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
-        sh '''echo "$KUBECONFIG_CONTENT"'''
+      step{
+          withCredentials([kubeconfigContent(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
+          sh '''echo "$KUBECONFIG_CONTENT"'''
+        }
       }
     }
     //stage('Production Deployment'){
