@@ -58,7 +58,7 @@ pipeline {
                     parameters {
                     string(name: 'VERSION', defaultValue: '', description: 'Enter your Stack Name [ For multiple stack use comma separated value(a,b,c) ] ?')
                 }
-            }s
+            }
       steps{
         sh ''' kubectl patch deployment myweb -p   '{"spec":{"template":{"spec":{"image":$registry:$VERSION}}}}' '''
       }
