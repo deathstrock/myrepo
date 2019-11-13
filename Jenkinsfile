@@ -10,7 +10,7 @@ pipeline {
 
   stages {
     stage ('confirmation') {
-      step{
+      steps{
       input('do you wish to contineu')
       }
     }
