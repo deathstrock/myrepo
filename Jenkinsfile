@@ -53,9 +53,12 @@ pipeline {
   //  //}
     stage('Deployment Confirmation'){
       steps{
-        input("Deploy changes to production?")
-        parameters {
-            string(name: 'VERSION', defaultValue: '', description: 'Enter image version for production')
+        input{
+          message "enter stable image version"
+          ok "continue..."
+          parameters {
+              string(name: 'VERSION', defaultValue: '', description: 'Enter image version for production')
+          }
         }
       }
     }
@@ -65,7 +68,8 @@ pipeline {
           //withCredentials([kubeconfigContent(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
           //sh '''kubectl apply -f myweb.yaml'''
           script {
-              kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+            //kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+            sh ''' kubectl patch deployment myweb -p   '{"spec":{"template":{"spec":{"image":$registry:$VERSION}}}}' '''
           }
         }
       }
