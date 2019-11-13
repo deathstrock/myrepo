@@ -30,7 +30,7 @@ pipeline {
       steps{
       
           withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-            sh 'sudo docker push -t $registry:latest'
+            sh 'sudo docker push $registry:latest'
             //docker.withRegistry( '', registryCredential ) {
             //sh """sudo docker push ${registry}:latest"""
             //dockerImage.push()
