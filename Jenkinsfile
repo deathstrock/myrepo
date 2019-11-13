@@ -1,50 +1,47 @@
 pipeline {
+
+  environment {
+    registry = "deathstrock47/newrepo"
+    registryCredential = 'dockerhub'
+    dockerImage = ""
+  }
+
   agent any
-     stages {
+
+  stages {
+
     stage('Checkout Source') {
       steps {
         git 'https://github.com/deathstrock/myrepo.git'
       }
-      
     }
 
     stage('Build image') {
-      steps {
+      steps{
         script {
-          dockerImage = docker.build registry +:latest
-          //dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          dockerImage = docker.build registry + ":latest"
         }
-
       }
     }
 
     stage('Push Image') {
-      steps {
+      steps{
         script {
           docker.withRegistry( '', registryCredential ) {
             dockerImage.push()
           }
         }
-
       }
     }
 
     stage('Deploy App') {
       steps {
         script {
-          //withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: 'https://kubernetes.default']) 
-          //sh 'kubectl apply -f myweb.yaml --kubeconfig=mykubeconfig --insecure-tls-skip-true=true'
           kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
         }
-
       }
     }
 
   }
-  environment {
-    registry = 'deathstrock47/newrepo'
-    registryCredential = 'dockerhub'
-    dockerImage = ''
-  }
+
 }
-     
