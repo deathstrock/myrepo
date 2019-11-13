@@ -9,7 +9,11 @@ pipeline {
   agent any
 
   stages {
-
+    stage ('confirmation') {
+      step{
+      input('do you wish to contineu')
+      }
+    }
     stage('Checkout Source') {
       steps {
         git 'https://github.com/deathstrock/myrepo.git'
