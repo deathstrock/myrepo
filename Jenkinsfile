@@ -45,7 +45,21 @@ pipeline {
         }
       }
     }
+    stage('Deployment Confirmation'){
+      steps{
+        input("Deploy changes to production?")
+      }
+    }
+    stage('Staging Deployment'){
 
+        withCredentials([kubeconfigContent(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
+        sh '''echo "$KUBECONFIG_CONTENT"'''
+      }
+    }
+    //stage('Production Deployment'){
+    //
+    //
+    //}
   }
 
 }
