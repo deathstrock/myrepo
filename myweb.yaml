@@ -6,11 +6,12 @@ metadata:
     app: myweb
   name: myweb
 spec:
-  replicas: 3
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 25%
+      maxUnavailable: 25%
+      maxSurge: 1
   selector:
     matchLabels:
       app: myweb
