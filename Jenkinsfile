@@ -1,27 +1,9 @@
 pipeline {
-  def userInput
-try {
-    userInput = input(
-        id: 'Proceed1', message: 'Was this successful?', parameters: [
-        [$class: 'BooleanParameterDefinition', defaultValue: true, description: '', name: 'Please confirm you agree with this']
-        ])
-} catch(err) { // input false
-    def user = err.getCauses()[0].getUser()
-    userInput = false
-    echo "Aborted by: [${user}]"
-}
   agent any
-   if (userInput == true) {
-    
      stages {
     stage('Checkout Source') {
       steps {
         git 'https://github.com/deathstrock/myrepo.git'
-      def doesJavaRock = input(message: 'Do you like Java?', ok: 'Yes', 
-                        parameters: [booleanParam(defaultValue: true, 
-                        description: 'If you like Java, just push the button',name: 'Yes?')])
-
-      echo "Java rocks?:" + doesJavaRock
       }
       
     }
@@ -29,7 +11,7 @@ try {
     stage('Build image') {
       steps {
         script {
-          dockerImage = docker.build registry
+          dockerImage = docker.build registry +:latest
           //dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
 
