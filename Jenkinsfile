@@ -30,7 +30,8 @@ pipeline {
       steps{
         script {
           docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
+            sh """sudo docker push ${registry}:latest"""
+            //dockerImage.push()
           }
         }
       }
