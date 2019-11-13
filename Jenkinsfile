@@ -48,14 +48,3 @@ pipeline {
   }
 }
      
-     echo "this was successful"
-}
-  else {
-        // do something else
-        echo "this was not successful"
-        currentBuild.result = 'FAILURE'
-    } 
-
-
-} 
-  
