@@ -17,6 +17,7 @@ pipeline {
     stage('Checkout Source') {
       steps {
         git 'https://github.com/deathstrock/myrepo.git'
+        sh """ git checkout $BRANCH """
       }
     }
   
@@ -24,61 +25,51 @@ pipeline {
       steps{
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
-          echo "$registry:$BUILD_NUMBER"
-
+          BUILD = "$registry:$BUILD_NUMBER"
         }
       }
     }
   
-//    stage('Push Image') {
-//      steps{
-//        script {
-//          docker.withRegistry( "" , registryCredential ) {
-//            dockerImage.push()
-//          }
-//        }
-//      }
-//    }
-//  
-//    stage('Stagging') {
-//        steps {
-//          script {
-//            kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
-//          }
-//        }
-//      }
-//    //stage('Changing tag to staging'){
-//    //  steps{
-//    //      
-//    //  }
-//    //}
-//    stage('Deployment Confirmation'){
-//      input {
-//                    message "Should we continue?"
-//                    ok "Yes, we should."
-//                    submitter "admin"
-//                    parameters {
-//                    string(name: 'VERSION', defaultValue: '', description: 'Enter your Stack Name [ For multiple stack use comma separated value(a,b,c) ] ?')
-//                }
-//            }
-//      steps{
-//        sh ''' ./patch.sh $VERSION   '''
-//      }
-//    }
-  //  stage('Staging Deployment'){
-  //    steps{
-  //        //withCredentials([kubeconfigContent(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
-  //        //withCredentials([kubeconfigContent(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG_CONTENT')]) {
-  //        //sh '''kubectl apply -f myweb.yaml'''
-  //        script {
-  //          //kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
-  //        }
-  //      }
-  //    }
-  //  //stage('Production Deployment'){
-    //
-    //
+    stage('Push Image') {
+      steps{
+        script {
+          docker.withRegistry( "" , registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    //stage('merge to staging'){
+    //  
     //}
-  }
+    stage('Stagging') {
+        steps {
+          if (param.BRANCH == 'feature'){
+            sh """ kubectl apply -f myweb.yaml --namespace $NAMESPACE """
+          }
 
+          script {
+            kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+          }
+        }
+      }
+
+    stage('Deployment Confirmation'){
+      input {
+            message "Should we continue?"
+            ok "Yes, we should."
+            submitter "admin"
+      }
+      steps{
+        sh ''' ./patch.sh $VERSION   '''
+      }
+    }
+    stage('Staging Deployment'){
+      steps{
+          script {
+            //kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+          }
+        }
+      }
+  }
 }
