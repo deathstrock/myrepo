@@ -48,9 +48,9 @@ pipeline {
             sh """ kubectl apply -f myweb.yaml --namespace $NAMESPACE """
           }
 
-          script {
-            kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
-          }
+          //script {
+          //  kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+          //}
         }
       }
 
@@ -64,12 +64,12 @@ pipeline {
         sh ''' ./patch.sh $VERSION   '''
       }
     }
-    stage('Staging Deployment'){
-      steps{
-          script {
-            //kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
-          }
-        }
-      }
+    //stage('Staging Deployment'){
+    //  steps{
+    //      script {
+    //        //kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
+    //      }
+    //    }
+    //  }
   }
 }
