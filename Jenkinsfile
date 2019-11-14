@@ -17,7 +17,7 @@ pipeline {
     stage('Checkout Source') {
       steps {
         git 'https://github.com/deathstrock/myrepo.git'
-        sh """ git checkout $BRANCH """
+        //sh """ git checkout $BRANCH """
       }
     }
   
