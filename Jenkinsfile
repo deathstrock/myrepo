@@ -45,7 +45,7 @@ pipeline {
     stage('Stagging') {
         steps {
           script{
-            withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: '']) {
+            withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: 'https://34.69.248.211']) {
             sh 'kubectl apply -f myweb.yaml --namespace jenkins'
           }
           }
