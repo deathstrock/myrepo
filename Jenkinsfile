@@ -41,7 +41,7 @@ pipeline {
         steps {
           script {
             sh ("""
-                -i -e -r  "sed  's/namespace: /namespace: $namespace/ myweb.yaml' 
+                "sed -i -e -r  's/namespace: /namespace: $namespace/ myweb.yaml' 
             """)
              //sed  "s/nodePort: /nodePort: $port/ myweb.yaml"
              //sed  "s/image: /- image: $BUILD/"
