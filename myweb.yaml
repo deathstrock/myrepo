@@ -5,7 +5,7 @@ metadata:
   labels:
     app: myweb
     name: myweb
-    namespace: default
+    namespace: 
 spec:
   replicas: 2
   strategy:
@@ -22,7 +22,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: "deathstrock47/newrepo:latest"
+      - image: "default"
         imagePullPolicy: Always
         name: myweb
 
@@ -33,10 +33,10 @@ metadata:
   labels:
     app: myweb
     name: myweb
-    namespace: default
+    namespace: 
 spec:
   ports:
-  - nodePort: 32223
+  - nodePort: 
     port: 80
     protocol: TCP
     targetPort: 80

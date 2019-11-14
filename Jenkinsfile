@@ -11,11 +11,7 @@ pipeline {
   agent any
 
   stages {
-  //  stage ('confirmation') {
-  //    steps{
-  //    input('do you wish to continue')
-  //    }
-  //  }
+
     stage('Checkout Source') {
       steps {
         git 'https://github.com/deathstrock/myrepo.git'
@@ -41,36 +37,15 @@ pipeline {
         }
       }
     }
-    //stage('merge to staging'){
-    //  
-    //}
     stage('Stagging') {
         steps {
           script {
-            sh """ sed -i "/namespace/c\/namespace: $namespace/ myweb.yaml" """
-            sh """ sed -i "/nodePort/c\/nodePort: $port/ myweb.yaml" """
-            sh """ sed -i "/image/c\/- image: $BUILD" """
+            sh """ sed  "s/namespace: /namespace: $namespace/ myweb.yaml" """
+            sh """ sed  "s/nodePort: /nodePort: $port/ myweb.yaml" """
+            sh """ sed  "s/image: /- image: $BUILD/" """
             kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
           }
         }
       }
-
-    stage('Deployment Confirmation'){
-      input {
-            message "Should we continue?"
-            ok "Yes, we should."
-            submitter "admin"
-      }
-      steps{
-        sh ''' ./patch.sh $VERSION   '''
-      }
-    }
-    //stage('Staging Deployment'){
-    //  steps{
-    //      script {
-    //        //kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
-    //      }
-    //    }
-    //  }
   }
 }
