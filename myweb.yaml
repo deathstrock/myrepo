@@ -4,7 +4,8 @@ kind: Deployment
 metadata:
   labels:
     app: myweb
-  name: myweb
+    name: myweb
+    namespace: default
 spec:
   replicas: 2
   strategy:
@@ -21,7 +22,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: "deathstrock47/newrepo:{{ VERSION }}"
+      - image: "deathstrock47/newrepo:latest"
         imagePullPolicy: Always
         name: myweb
 
@@ -31,7 +32,8 @@ kind: Service
 metadata:
   labels:
     app: myweb
-  name: myweb
+    name: myweb
+    namespace: default
 spec:
   ports:
   - nodePort: 32223

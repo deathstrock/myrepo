@@ -1,7 +1,9 @@
 pipeline {
 
   environment {
-    registry = "deathstrock47/newrepo"
+    registry = "deathstrock47/$REPO" //qa
+    namespace = "$NAMESPACE" //qa
+    port = "$PORT" //32001
     dockerImage = ""
     registryCredential = "dockerhub"
   }
@@ -44,15 +46,12 @@ pipeline {
     //}
     stage('Stagging') {
         steps {
-          script{
-            withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: 'https://34.69.248.211']) {
-            sh 'kubectl apply -f myweb.yaml --namespace jenkins'
+          script {
+            sed "s/namespace/c\namespace: $namespace/ myweb.yaml"
+            sed "s/nodePort/c\nodePort: $port/ myweb.yaml"
+            sed "s/image/c\- image: $BUILD"
+            kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
           }
-          }
-
-          //script {
-          //  kubernetesDeploy(configs: "myweb.yaml", kubeconfigId: "mykubeconfig")
-          //}
         }
       }
 
