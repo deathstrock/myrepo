@@ -45,9 +45,9 @@ pipeline {
     stage('Stagging') {
         steps {
           script{
-            if ("$BRANCH" == 'feature'){
-              sh """ kubectl apply -f myweb.yaml --namespace $NAMESPACE """
-            }
+            withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: '']) {
+            sh 'kubectl apply -f myweb.yaml --namespace jenkins'
+          }
           }
 
           //script {
