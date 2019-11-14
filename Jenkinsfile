@@ -44,8 +44,10 @@ pipeline {
     //}
     stage('Stagging') {
         steps {
-          if (param.BRANCH == 'feature'){
-            sh """ kubectl apply -f myweb.yaml --namespace $NAMESPACE """
+          script{
+            if (param.BRANCH == 'feature'){
+              sh """ kubectl apply -f myweb.yaml --namespace $NAMESPACE """
+            }
           }
 
           //script {
